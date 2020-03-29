@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 
 import Routes from './routes';
@@ -20,6 +21,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <ToastContainer autoClose={3000} />
       <Header toggleTheme={toggleTheme} />
       <Routes />
     </ThemeProvider>
