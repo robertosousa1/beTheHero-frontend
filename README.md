@@ -1,7 +1,7 @@
 
 
 <h1 align="center">
-    <img alt="Be The Hero" src="https://res.cloudinary.com/robertosousa1/image/upload/v1585419343/github-readme/bethehero_nr9mqs.svg" width="200px" />
+    <img alt="Be The Hero" src="https://res.cloudinary.com/robertosousa1/image/upload/v1585419343/github-readme/bethehero_nr9mqs.svg" width="120px" />
 </h1>
 
 <h4 align="center">
@@ -26,6 +26,10 @@
   </a>
   
   <img alt="GitHub" src="https://img.shields.io/github/license/robertosousa1/beTheHero-frontend.svg">   
+</p>
+
+<p align="center">
+  <img src="https://res.cloudinary.com/robertosousa1/image/upload/v1585504530/github-readme/ezgif.com-video-to-gif_rsetp6.gif" alt="demo-web" height="385">
 </p>
 
 <p align="center">
