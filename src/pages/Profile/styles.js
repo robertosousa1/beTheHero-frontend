@@ -7,7 +7,7 @@ export const Container = styled.div`
   margin: 32px auto;
 
   h1 {
-    padding: 10px;
+    padding-bottom: 20px;
     margin-top: 80px;
     margin-bottom: 24;
     transition: color 1s ease 0s, transform 1s ease 0s;
@@ -28,14 +28,9 @@ export const Container = styled.div`
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       transition: all 0.2s ease 0s;
-      border-width: 2px;
-      border-style: solid;
-      border-color: rgb(11, 10, 13);
       border-image: initial;
       &:hover {
-        border-width: 2px;
-        border-style: solid;
-        border-color: #e02041;
+        border: 2px solid #e02041;
         border-image: initial;
       }
 
@@ -52,9 +47,7 @@ export const Container = styled.div`
         justify-content: center;
         border-radius: 8px;
         transition: border 0.2s ease 0s, transform 0.2s ease 0s;
-        border-width: 3px;
-        border-style: solid;
-        border-color: transparent;
+        border: 3px solid transparent;
         border-image: initial;
 
         svg {
@@ -126,9 +119,7 @@ export const Header = styled.header`
     -webkit-box-pack: center;
     justify-content: center;
     transition: border 0.2s ease 0s, transform 0.2s ease 0s;
-    border-width: 3px;
-    border-style: solid;
-    border-color: ${(props) => props.theme.colors.background};
+    border: 3px solid ${(props) => props.theme.colors.background};
     border-image: initial;
 
     &:hover {
@@ -155,14 +146,18 @@ export const Header = styled.header`
     justify-content: center;
     border-radius: 8px;
     transition: border 0.2s ease 0s, transform 0.2s ease 0s;
-    border-width: 3px;
-    border-style: solid;
-    border-color: ${(props) => props.theme.colors.background};
+    border: ${(props) =>
+      props.theme.title === 'light'
+        ? '1px solid #dcdce6'
+        : `1px solid #1c1c1c`};
     border-image: initial;
 
     &:hover {
       transform: translateY(-5px);
-      border-color: ${(props) => props.theme.colors.text};
+      border: ${(props) =>
+        props.theme.title === 'light'
+          ? '3px solid #0C090D'
+          : `3px solid #1c1c1c`};
     }
   }
 `;
