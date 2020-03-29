@@ -1,39 +1,43 @@
 import React, { useState, useContext } from 'react';
 import { ThemeContext } from 'styled-components';
+import { toast } from 'react-toastify';
 
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
-// import api from '../../services/api'
+import api from '../../services/api';
 
 import { Container, Content, Section, Button, Form } from './styles';
 
 export default function NewIncident() {
-  // const [title, setTitle] = useState('')
-  // const [description, setDescription] = useState('')
-  // const [value, setValue] = useState('')
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [value, setValue] = useState('');
 
-  // const history = useHistory()
+  const history = useHistory();
 
-  // const ongId = localStorage.getItem('ongId')
+  const ongId = localStorage.getItem('ongId');
 
   async function handleNewIncident(e) {
-    // e.preventDefault()
-    // const data = {
-    //   title,
-    //   description,
-    //   value,
-    // }
-    // try {
-    //   await api.post('incidents', data, {
-    //     headers: {
-    //       Authorization: ongId,
-    //     },
-    //   })
-    //   history.push('/profile')
-    // } catch (err) {
-    //   alert('Erro ao cadastrar caso, tente novamente.')
-    // }
+    e.preventDefault();
+
+    const data = {
+      title,
+      description,
+      value,
+    };
+
+    try {
+      await api.post('incidents', data, {
+        headers: {
+          Authorization: ongId,
+        },
+      });
+
+      history.push('/profile');
+    } catch (err) {
+      toast.error('Erro ao cadastrar caso, tente novamente.');
+    }
   }
 
   const { logo } = useContext(ThemeContext);
@@ -58,19 +62,19 @@ export default function NewIncident() {
         <Form onSubmit={handleNewIncident}>
           <input
             placeholder="Título do caso"
-            // value={title}
-            // onChange={(e) => setTitle(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <textarea
             placeholder="Descrição"
-            // value={description}
-            // onChange={(e) => setDescription(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
 
           <input
             placeholder="Valor em reais"
-            // value={value}
-            // onChange={(e) => setValue(e.target.value)}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
           />
 
           <Button type="submit">Cadastrar</Button>
