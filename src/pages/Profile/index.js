@@ -1,49 +1,72 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
 import { ThemeContext } from 'styled-components';
+import { toast } from 'react-toastify';
+
+import api from '../../services/api';
 
 import { Container, Header } from './styles';
 
 export default function Profile() {
   const { logo } = useContext(ThemeContext);
 
-  const incidents = [
-    {
-      id: 2,
-      title: 'Caso 1',
-      description: 'Detalhes do caso',
-      value: 120,
-      ong_id: '20301baa',
-      name: 'APAD',
-      email: 'contato@apad.com.br',
-      whatsapp: '47000000000',
-      city: 'Rio do Sul',
-      uf: 'SC',
-    },
-    {
-      id: 3,
-      title: 'Caso 2',
-      description: 'Detalhes do caso',
-      value: 120,
-      ong_id: '20301baa',
-      name: 'APAD',
-      email: 'contato@apad.com.br',
-      whatsapp: '47000000000',
-      city: 'Rio do Sul',
-      uf: 'SC',
-    },
-  ];
+  const history = useHistory();
+
+  const [incidents, setIncidents] = useState([]);
+
+  const ongName = localStorage.getItem('ongName');
+  const ongId = localStorage.getItem('ongId');
+
+  useEffect(() => {
+    async function loadIncidents() {
+      try {
+        const { data } = await api.get('profile', {
+          headers: {
+            Authorization: ongId,
+          },
+        });
+
+        setIncidents(data);
+      } catch (error) {
+        toast.error(
+          'Falha no carregamento de incidentes, tente novamente mais tarde.'
+        );
+      }
+    }
+
+    loadIncidents();
+  }, [ongId]);
+
+  async function handleDeleteIncident(id) {
+    try {
+      await api.delete(`incidents/${id}`, {
+        headers: {
+          Authorization: ongId,
+        },
+      });
+
+      setIncidents(incidents.filter((incident) => incident.id !== id));
+    } catch (error) {
+      toast.error('Erro ao deletar incidente, tente novamente.');
+    }
+  }
+
+  function handleLogout() {
+    localStorage.clear();
+
+    history.push('/');
+  }
 
   return (
     <Container>
       <Header>
         <img src={logo} alt="Be The Hero" />
 
-        <span>Bem vindo, ADAP </span>
+        <span>Bem vindo, {ongName}</span>
 
         <Link to="incidents/new">Cadastrar novo caso</Link>
-        <button onClick={() => {}} type="button">
+        <button onClick={handleLogout} type="button">
           <FiPower size={18} color="#E02041" />
         </button>
       </Header>
@@ -67,7 +90,10 @@ export default function Profile() {
                 }).format(incident.value)}
               </p>
 
-              <button onClick={() => {}} type="button">
+              <button
+                onClick={() => handleDeleteIncident(incident.id)}
+                type="button"
+              >
                 <FiTrash2 size={20} />
               </button>
             </li>
